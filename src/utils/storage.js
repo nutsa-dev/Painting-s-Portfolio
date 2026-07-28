@@ -19,7 +19,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Oil on Canvas',
     size: '60 × 80 cm',
     category: 'Floral',
-    imageUrl: '/paintings/1.jpg',
+    imageUrl: './paintings/1.jpg',
     createdAt: Date.now() - 11000
   },
   {
@@ -28,7 +28,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Acrylic & Mixed Media',
     size: '50 × 70 cm',
     category: 'Still Life',
-    imageUrl: '/paintings/2.jpg',
+    imageUrl: './paintings/2.jpg',
     createdAt: Date.now() - 10000
   },
   {
@@ -37,7 +37,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Oil on Linen',
     size: '70 × 90 cm',
     category: 'Floral',
-    imageUrl: '/paintings/3.jpg',
+    imageUrl: './paintings/3.jpg',
     createdAt: Date.now() - 9000
   },
   {
@@ -46,7 +46,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Mixed Media on Wood',
     size: '80 × 100 cm',
     category: 'Mixed Media',
-    imageUrl: '/paintings/4.jpg',
+    imageUrl: './paintings/4.jpg',
     createdAt: Date.now() - 8000
   },
   {
@@ -55,7 +55,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Oil on Canvas',
     size: '65 × 85 cm',
     category: 'Still Life',
-    imageUrl: '/paintings/5.jpg',
+    imageUrl: './paintings/5.jpg',
     createdAt: Date.now() - 7000
   },
   {
@@ -64,7 +64,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Watercolor & Ink',
     size: '40 × 50 cm',
     category: 'Floral',
-    imageUrl: '/paintings/6.jpg',
+    imageUrl: './paintings/6.jpg',
     createdAt: Date.now() - 6000
   },
   {
@@ -73,7 +73,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Mixed Media',
     size: '75 × 95 cm',
     category: 'Mixed Media',
-    imageUrl: '/paintings/7.jpg',
+    imageUrl: './paintings/7.jpg',
     createdAt: Date.now() - 5000
   },
   {
@@ -82,7 +82,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Oil on Canvas',
     size: '55 × 75 cm',
     category: 'Still Life',
-    imageUrl: '/paintings/20230710_092608.jpg',
+    imageUrl: './paintings/20230710_092608.jpg',
     createdAt: Date.now() - 4000
   },
   {
@@ -91,7 +91,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Oil on Linen',
     size: '60 × 60 cm',
     category: 'Floral',
-    imageUrl: '/paintings/0d44588e-84ef-444d-b0b1-aacd266d0aff.jpg',
+    imageUrl: './paintings/0d44588e-84ef-444d-b0b1-aacd266d0aff.jpg',
     createdAt: Date.now() - 3000
   },
   {
@@ -100,7 +100,7 @@ const DEFAULT_PAINTINGS = [
     medium: 'Mixed Media',
     size: '90 × 120 cm',
     category: 'Mixed Media',
-    imageUrl: '/paintings/b38e870f-e5a1-414c-990f-c8425ca9feb8.jpg',
+    imageUrl: './paintings/b38e870f-e5a1-414c-990f-c8425ca9feb8.jpg',
     createdAt: Date.now() - 2000
   },
   {
@@ -109,13 +109,13 @@ const DEFAULT_PAINTINGS = [
     medium: 'Oil on Canvas',
     size: '50 × 60 cm',
     category: 'Still Life',
-    imageUrl: '/paintings/f97e5d5d-9ddc-4041-a847-30836ea67197.jpg',
+    imageUrl: './paintings/f97e5d5d-9ddc-4041-a847-30836ea67197.jpg',
     createdAt: Date.now() - 1000
   }
 ];
 
 const DEFAULT_ABOUT = {
-  photoUrl: '/image.png',
+  photoUrl: './image.png',
   paragraphs: [
     "Hi, I'm Nutsa, and it took years to identify myself as an artist.",
     "Having a background in media and management, I've been painting at the same time for more than 10 years.",
@@ -128,7 +128,8 @@ const DEFAULT_ABOUT = {
 
 // Initialize default storage data if empty or outdated
 export function initStorage() {
-  if (!localStorage.getItem(STORAGE_KEYS.PAINTINGS)) {
+  const storedPaintings = localStorage.getItem(STORAGE_KEYS.PAINTINGS);
+  if (!storedPaintings || storedPaintings.includes('"/paintings/')) {
     localStorage.setItem(STORAGE_KEYS.PAINTINGS, JSON.stringify(DEFAULT_PAINTINGS));
   }
   if (!localStorage.getItem(STORAGE_KEYS.CATEGORIES)) {
@@ -136,7 +137,7 @@ export function initStorage() {
   }
   // Always update default bio text & photo to match exact user request
   const storedAbout = localStorage.getItem(STORAGE_KEYS.ABOUT_ME);
-  if (!storedAbout || JSON.parse(storedAbout)?.photoUrl === '/paintings/1.jpg') {
+  if (!storedAbout || JSON.parse(storedAbout)?.photoUrl === '/paintings/1.jpg' || JSON.parse(storedAbout)?.photoUrl === '/image.png') {
     localStorage.setItem(STORAGE_KEYS.ABOUT_ME, JSON.stringify(DEFAULT_ABOUT));
   }
 }

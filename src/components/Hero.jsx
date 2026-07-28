@@ -5,7 +5,7 @@ export default function Hero({ isDarkMode }) {
     <section id="home" className="photorealistic-hero-wall">
       {/* Main Base Visual Photo (Edge-to-Edge Full Bleed) */}
       <img
-        src="/images/hero_home.jpg"
+        src="./images/hero_home.jpg"
         alt="Nutsa Fine Art Canvases & Studio Visual"
         className="hero-base-photo"
       />

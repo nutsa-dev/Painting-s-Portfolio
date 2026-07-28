@@ -20,7 +20,7 @@ export default function AboutMe({ aboutData }) {
       <div className="about-container">
         <div className="about-image">
           <div className="img-frame">
-            <img src={photoUrl || '/image.png'} alt="Nutsa — Artist Portrait" />
+            <img src={photoUrl || './image.png'} alt="Nutsa — Artist Portrait" />
           </div>
         </div>
 

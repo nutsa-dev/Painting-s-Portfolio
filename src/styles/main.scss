@@ -356,7 +356,8 @@ h1, h2, h3, h4, h5, h6 {
     inset: -5%;
     width: 110%;
     height: 110%;
-    background-image: url('/images/tree_shadow.png');
+    /* Subtle overlay to simulate natural light scattering */
+    background-image: url('/Painting-s-Portfolio/images/tree_shadow.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
