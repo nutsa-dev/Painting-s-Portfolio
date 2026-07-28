@@ -33,14 +33,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode, onOpenAdmin }) {
         Nutsa
       </a>
 
-      <button
-        className="mobile-toggle"
-        onClick={() => setMobileOpen(!mobileOpen)}
-        aria-label="Toggle Navigation"
-        aria-expanded={mobileOpen}
-      >
-        {mobileOpen ? <X size={30} /> : <Menu size={30} />}
-      </button>
+
 
       {/* Modern UI/UX: Redundant 'Home' link removed since brand logo serves as Home */}
       <ul className={`nav-links ${mobileOpen ? 'open' : ''}`}>
@@ -58,20 +51,31 @@ export default function Navbar({ isDarkMode, setIsDarkMode, onOpenAdmin }) {
         </li>
       </ul>
 
-      <div className="nav-actions">
+      <div className="nav-controls">
+        <div className="nav-actions">
+          <button
+            className={`dual-theme-switch ${isDarkMode ? 'dark' : 'light'}`}
+            onClick={toggleTheme}
+            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            aria-label="Toggle Dark Mode"
+          >
+            <span className="switch-icon sun-icon">
+              <Sun size={18} />
+            </span>
+            <span className="switch-icon moon-icon">
+              <Moon size={18} />
+            </span>
+            <span className="switch-slider-knob" />
+          </button>
+        </div>
+
         <button
-          className={`dual-theme-switch ${isDarkMode ? 'dark' : 'light'}`}
-          onClick={toggleTheme}
-          title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          aria-label="Toggle Dark Mode"
+          className="mobile-toggle"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle Navigation"
+          aria-expanded={mobileOpen}
         >
-          <span className="switch-icon sun-icon">
-            <Sun size={18} />
-          </span>
-          <span className="switch-icon moon-icon">
-            <Moon size={18} />
-          </span>
-          <span className="switch-slider-knob" />
+          {mobileOpen ? <X size={30} /> : <Menu size={30} />}
         </button>
       </div>
     </nav>
