@@ -7,6 +7,7 @@ import AboutMe from './components/AboutMe';
 import Contact from './components/Contact';
 import Shop from './components/Shop';
 import AdminModal from './components/AdminModal';
+import SocialShare from './components/SocialShare';
 
 import { getPaintings, getCategories, getAboutMe } from './utils/storage';
 import './styles/main.scss';
@@ -83,6 +84,9 @@ export default function App() {
 
       {/* Footer */}
       <footer className="footer">
+        <div className="footer-share-wrapper">
+          <SocialShare variant="main" />
+        </div>
         <p>
           &copy; {new Date().getFullYear()} Nutsa — All Rights Reserved. Fine Art & Portfolio.
         </p>

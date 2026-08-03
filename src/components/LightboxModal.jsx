@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight, Sun, Moon } from 'lucide-react';
 import { playCurtainSound } from '../utils/audio';
+import SocialShare from './SocialShare';
 
 export default function LightboxModal({ artwork, paintings, onClose, onNavigate, isDarkMode, setIsDarkMode }) {
   // Use a single ref object to track latest props without triggering stale closures or excessive effects
@@ -118,6 +119,9 @@ export default function LightboxModal({ artwork, paintings, onClose, onNavigate,
                 </div>
               )}
             </div>
+
+            {/* Social Media Share Buttons */}
+            <SocialShare artwork={artwork} variant="lightbox" />
           </div>
         </div>
       </div>
