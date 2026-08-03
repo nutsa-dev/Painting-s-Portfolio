@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Share2, Link, Check } from 'lucide-react';
+import { Share2, Link, Check, Instagram } from 'lucide-react';
 
 export default function SocialShare({ artwork, variant = 'main', customUrl, customTitle }) {
   const [copied, setCopied] = useState(false);
@@ -24,7 +24,7 @@ export default function SocialShare({ artwork, variant = 'main', customUrl, cust
   // Share platform links
   const shareLinks = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+    instagram: `https://www.instagram.com/nutsakurdadze/`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
     pinterest: `https://www.pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`,
   };
@@ -42,9 +42,9 @@ export default function SocialShare({ artwork, variant = 'main', customUrl, cust
       return;
     }
 
-    // Open share popup window
+    // Open share / profile window
     const width = 600;
-    const height = 500;
+    const height = 650;
     const left = (window.innerWidth - width) / 2;
     const top = (window.innerHeight - height) / 2;
     window.open(
@@ -87,19 +87,17 @@ export default function SocialShare({ artwork, variant = 'main', customUrl, cust
           </svg>
         </a>
 
-        {/* X / Twitter */}
+        {/* Instagram */}
         <a
-          href={shareLinks.twitter}
-          onClick={(e) => handleShareClick(e, 'twitter', shareLinks.twitter)}
-          className="share-btn share-twitter"
-          title="Share on X (Twitter)"
-          aria-label="Share on X (Twitter)"
+          href={shareLinks.instagram}
+          onClick={(e) => handleShareClick(e, 'instagram', shareLinks.instagram)}
+          className="share-btn share-instagram"
+          title="Follow / View on Instagram"
+          aria-label="Instagram Profile"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
+          <Instagram size={16} />
         </a>
 
         {/* LinkedIn */}
