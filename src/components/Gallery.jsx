@@ -19,7 +19,6 @@ export default function Gallery({ paintings, categories, onSelectArtwork }) {
     return filteredPaintings.slice(0, displayLimit);
   }, [filteredPaintings, displayLimit]);
 
-  const hasMore = filteredPaintings.length > displayLimit;
   const isExpanded = displayLimit >= filteredPaintings.length && filteredPaintings.length > INITIAL_LIMIT;
 
   const handleCategorySelect = (cat) => {
@@ -36,13 +35,6 @@ export default function Gallery({ paintings, categories, onSelectArtwork }) {
       e.preventDefault();
       onSelectArtwork(art);
     }
-  };
-
-  const getItemClass = (index) => {
-    if (index === 0) return 'editorial-item item-featured';
-    if (index === 3 || index === 7) return 'editorial-item item-tall';
-    if (index === 5 || index === 10) return 'editorial-item item-wide';
-    return 'editorial-item';
   };
 
   return (
@@ -72,39 +64,43 @@ export default function Gallery({ paintings, categories, onSelectArtwork }) {
         </div>
       </div>
 
-      {/* Asymmetrical Editorial Gallery Layout */}
-      <div className="editorial-asymmetrical-grid">
-        {visiblePaintings.map((art, index) => {
+      {/* Fine-Art Uncropped Aspect Ratio Gallery Layout */}
+      <div className="fine-art-gallery-grid">
+        {visiblePaintings.map((art) => {
           const isLoaded = loadedImages[art.id];
-          const itemClassName = getItemClass(index);
 
           return (
             <div
               key={art.id}
-              className={itemClassName}
+              className="gallery-art-card"
               onClick={() => onSelectArtwork(art)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => handleKeyDown(e, art)}
               aria-label={`View ${art.title}`}
             >
-              <div className="card-image">
+              <div className="card-canvas-wrapper">
                 {!isLoaded && <SkeletonLoader />}
                 <img
                   src={art.imageUrl}
                   alt={art.title}
                   loading="lazy"
                   onLoad={() => handleImageLoad(art.id)}
-                  className={isLoaded ? 'loaded' : 'loading'}
+                  className={`painting-canvas-img ${isLoaded ? 'loaded' : 'loading'}`}
                 />
                 <div className="card-overlay">
-                  <div className="overlay-details">
-                    <h4 className="overlay-title">{art.title}</h4>
-                    {art.medium && <p className="overlay-meta">{art.medium}</p>}
-                  </div>
                   <div className="view-icon">
                     <Eye size={22} />
                   </div>
+                </div>
+              </div>
+
+              {/* Artwork Title & Specs Box (Clean Fine-Art Framing) */}
+              <div className="art-card-info">
+                <h4 className="art-title">{art.title}</h4>
+                <div className="art-meta-row">
+                  {art.medium && <span className="art-medium">{art.medium}</span>}
+                  {art.size && <span className="art-size">{art.size}</span>}
                 </div>
               </div>
             </div>
@@ -112,7 +108,7 @@ export default function Gallery({ paintings, categories, onSelectArtwork }) {
         })}
       </div>
 
-      {/* View All Works / Show Less CTA */}
+      {/* View All Works / Show Featured CTA */}
       {filteredPaintings.length > INITIAL_LIMIT && (
         <div className="view-more-btn-wrapper">
           <button
@@ -120,7 +116,6 @@ export default function Gallery({ paintings, categories, onSelectArtwork }) {
             onClick={() => {
               if (isExpanded) {
                 setDisplayLimit(INITIAL_LIMIT);
-                // Scroll back up to top of gallery smoothly when collapsing
                 document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
               } else {
                 setDisplayLimit(filteredPaintings.length);
