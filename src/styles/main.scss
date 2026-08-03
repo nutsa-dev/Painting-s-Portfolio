@@ -217,23 +217,13 @@ h1, h2, h3, h4, h5, h6 {
   width: 68px;
   height: 34px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 3px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
   outline: none;
-  transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255, 255, 255, 0.4);
-
-  &:hover {
-    border-color: var(--accent-color);
-    box-shadow: 0 6px 20px rgba(140, 109, 83, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  }
+  transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
 
   .switch-icon {
     display: flex;
@@ -242,7 +232,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 26px;
     height: 26px;
     z-index: 2;
-    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
 
     &.sun-icon {
       color: #D69E2E;
@@ -254,43 +244,64 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   &.dark {
-    background: rgba(30, 34, 42, 0.65);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      border-color: var(--accent-color);
+      box-shadow: 0 6px 20px rgba(200, 154, 116, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
 
     .sun-icon {
       color: var(--text-muted);
       transform: scale(0.85);
-      opacity: 0.55;
+      opacity: 0.45;
     }
     .moon-icon {
-      color: #F6AD55;
-      transform: scale(1.1);
+      color: #E2B591;
+      transform: scale(1.05);
       opacity: 1;
+      filter: drop-shadow(0 0 6px rgba(226, 181, 145, 0.4));
     }
     .switch-slider-knob {
       transform: translateX(34px);
-      background: rgba(255, 255, 255, 0.92);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px #ffffff;
+      background: var(--text-primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
     }
   }
 
   &.light {
-    background: rgba(233, 228, 220, 0.65);
+    background: rgba(233, 228, 220, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(44, 40, 37, 0.05), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+
+    &:hover {
+      border-color: var(--accent-color);
+      box-shadow: 0 6px 20px rgba(140, 109, 83, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      transform: translateY(-1px);
+    }
 
     .sun-icon {
       color: #D69E2E;
-      transform: scale(1.1);
+      transform: scale(1.05);
       opacity: 1;
+      filter: drop-shadow(0 0 6px rgba(214, 158, 46, 0.3));
     }
     .moon-icon {
       color: var(--text-muted);
       transform: scale(0.85);
-      opacity: 0.55;
+      opacity: 0.45;
     }
     .switch-slider-knob {
       transform: translateX(0px);
       background: #FFFFFF;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12), inset 0 1px 1px #ffffff;
+      box-shadow: 0 2px 8px rgba(44, 40, 37, 0.18), inset 0 1px 1px #ffffff;
     }
   }
 
@@ -446,88 +457,79 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 3rem;
   }
 
-  /* Category Filter Pills - Masterpiece 3D Liquid Glass Aesthetics */
+  /* Category Filter Pills */
   .category-filter {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.9rem;
+    gap: 0.85rem;
 
     .filter-btn {
-      background: transparent;
+      background: var(--bg-card);
       color: var(--text-secondary);
       border: 1px solid var(--border-color);
-      padding: 0.7rem 1.8rem;
+      padding: 0.65rem 1.6rem;
       border-radius: 30px;
-      font-size: 0.9rem;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
       font-weight: 500;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       cursor: pointer;
       outline: none;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 
       &:hover {
         border-color: var(--accent-color);
         color: var(--accent-color);
+        background: var(--bg-secondary);
         transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }
 
       &.active {
         background: var(--text-primary);
         color: var(--bg-primary);
         border-color: var(--text-primary);
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+
+        &:hover {
+          transform: translateY(-2px);
+          opacity: 0.92;
+        }
       }
     }
   }
 
-  /* Master Dark Mode 3D Liquid Glass Optics (Apple VisionOS Aesthetic) */
+  /* Dark Theme Filter Pills Balance */
   [data-theme="dark"] & {
     .filter-btn {
-      color: #94A3B8;
-      border: 1px solid transparent;
-      background: transparent;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 
       &:hover {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        color: #E2E8F0;
-        border-color: transparent !important;
+        background: rgba(200, 154, 116, 0.12);
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
       }
 
       &.active {
-        /* High-Clarity Crystalline Liquid Glass Fill */
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(24px) saturate(200%);
-        -webkit-backdrop-filter: blur(24px) saturate(200%);
-        color: #FFFFFF;
+        background: var(--text-primary);
+        color: var(--bg-primary);
+        border-color: var(--text-primary);
         font-weight: 600;
-        letter-spacing: 0.03em;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-
-        /* Razor-Sharp Specular Light Rim (Top reflection line + subtle side/bottom frame) */
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        border-top: 1.2px solid rgba(255, 255, 255, 0.65) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-
-        /* Precision 3D Volumetric Inset & Ambient Drop Shadow */
-        box-shadow: 
-          inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
-          inset 0 -2px 6px 0 rgba(0, 0, 0, 0.5),
-          0 10px 28px -6px rgba(0, 0, 0, 0.75),
-          0 2px 8px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 6px 20px rgba(200, 154, 116, 0.2);
 
         &:hover {
-          background: rgba(255, 255, 255, 0.12);
-          border: 1px solid rgba(255, 255, 255, 0.25) !important;
-          border-top: 1.2px solid rgba(255, 255, 255, 0.85) !important;
-          color: #FFFFFF;
-          transform: translateY(-1px);
-          box-shadow: 
-            inset 0 1px 2px 0 rgba(255, 255, 255, 0.6),
-            inset 0 -2px 6px 0 rgba(0, 0, 0, 0.6),
-            0 14px 35px -6px rgba(0, 0, 0, 0.85),
-            0 4px 12px rgba(0, 0, 0, 0.5);
+          background: var(--accent-color);
+          border-color: var(--accent-color);
+          color: #121417;
+          transform: translateY(-2px);
         }
       }
     }
