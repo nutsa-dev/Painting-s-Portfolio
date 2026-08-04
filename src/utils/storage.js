@@ -126,18 +126,15 @@ const DEFAULT_ABOUT = {
   ]
 };
 
-// Initialize default storage data if empty or outdated
+// Initialize default storage data only when keys are completely absent
 export function initStorage() {
-  const storedPaintings = localStorage.getItem(STORAGE_KEYS.PAINTINGS);
-  if (!storedPaintings || storedPaintings.includes('"/paintings/')) {
+  if (!localStorage.getItem(STORAGE_KEYS.PAINTINGS)) {
     localStorage.setItem(STORAGE_KEYS.PAINTINGS, JSON.stringify(DEFAULT_PAINTINGS));
   }
   if (!localStorage.getItem(STORAGE_KEYS.CATEGORIES)) {
     localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(DEFAULT_CATEGORIES));
   }
-  // Always update default bio text & photo to match exact user request
-  const storedAbout = localStorage.getItem(STORAGE_KEYS.ABOUT_ME);
-  if (!storedAbout || JSON.parse(storedAbout)?.photoUrl === '/paintings/1.jpg' || JSON.parse(storedAbout)?.photoUrl === '/image.png') {
+  if (!localStorage.getItem(STORAGE_KEYS.ABOUT_ME)) {
     localStorage.setItem(STORAGE_KEYS.ABOUT_ME, JSON.stringify(DEFAULT_ABOUT));
   }
 }
@@ -155,16 +152,14 @@ export function getPaintings() {
 export function savePainting(painting) {
   const current = getPaintings();
   let updated;
-  if (painting.id) {
-    // Update existing
-    updated = current.map(p => (p.id === painting.id ? { ...p, ...painting } : p));
+  const id = painting.id || null;
+  if (id) {
+    // Update existing — merge new fields over stored record
+    updated = current.map(p => (p.id === id ? { ...p, ...painting, id } : p));
   } else {
-    // Add new
-    const newPainting = {
-      ...painting,
-      id: 'p-' + Date.now(),
-      createdAt: Date.now()
-    };
+    // Add new with a fresh unique id
+    const newId = 'p-' + Date.now();
+    const newPainting = { ...painting, id: newId, createdAt: Date.now() };
     updated = [newPainting, ...current];
   }
   localStorage.setItem(STORAGE_KEYS.PAINTINGS, JSON.stringify(updated));
@@ -176,6 +171,11 @@ export function deletePainting(id) {
   const updated = current.filter(p => p.id !== id);
   localStorage.setItem(STORAGE_KEYS.PAINTINGS, JSON.stringify(updated));
   return updated;
+}
+
+export function savePaintingsOrder(paintingsList) {
+  localStorage.setItem(STORAGE_KEYS.PAINTINGS, JSON.stringify(paintingsList));
+  return paintingsList;
 }
 
 // Categories API

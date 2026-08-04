@@ -1,8 +1,44 @@
 import React, { useState, useMemo } from 'react';
-import { Eye, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import SkeletonLoader from './SkeletonLoader';
 
 const INITIAL_LIMIT = 9;
+
+/**
+ * Helper to parse dimensions from strings like "60 × 80 cm" or "40 x 50 cm"
+ */
+export function parseArtworkDimensions(sizeStr) {
+  if (!sizeStr) return null;
+  const normalized = sizeStr.replace(/×/g, 'x').replace(/cm/gi, '').trim();
+  const parts = normalized.split(/x/i).map(p => parseFloat(p.trim())).filter(n => !isNaN(n));
+  if (parts.length >= 2) {
+    return { widthCm: parts[0], heightCm: parts[1] };
+  }
+  return null;
+}
+
+/**
+ * Calculates relative max-width style based on maximum dimension (Math.max(widthCm, heightCm))
+ * with visual guardrails (minimum scale 0.70, maximum scale 1.0) so smaller artworks remain
+ * legible and beautifully proportioned without looking lost.
+ */
+export function getRelativeScaleStyle(sizeStr) {
+  const dims = parseArtworkDimensions(sizeStr);
+  if (!dims) return {};
+
+  const maxDimensionCm = Math.max(dims.widthCm, dims.heightCm);
+  const BASELINE_DIM_CM = 100; // Benchmark standard maximum dimension in cm
+  const rawRatio = maxDimensionCm / BASELINE_DIM_CM;
+  
+  // Guardrails: Clean scaling range between 0.70 (min) and 1.00 (max)
+  const clampedScale = Math.min(Math.max(0.70 + (rawRatio - 0.50) * 0.5, 0.70), 1.0);
+  const widthPercent = Math.round(clampedScale * 100);
+
+  return {
+    maxWidth: `${widthPercent}%`,
+    margin: '0 auto'
+  };
+}
 
 export default function Gallery({ paintings, categories, onSelectArtwork }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -64,10 +100,11 @@ export default function Gallery({ paintings, categories, onSelectArtwork }) {
         </div>
       </div>
 
-      {/* Fine-Art Uncropped Aspect Ratio Gallery Layout */}
+      {/* Fine-Art Uncropped Aspect Ratio Gallery Grid (Strict 3 per Row) */}
       <div className="fine-art-gallery-grid">
         {visiblePaintings.map((art) => {
           const isLoaded = loadedImages[art.id];
+          const canvasScaleStyle = getRelativeScaleStyle(art.size);
 
           return (
             <div
@@ -88,15 +125,10 @@ export default function Gallery({ paintings, categories, onSelectArtwork }) {
                   onLoad={() => handleImageLoad(art.id)}
                   className={`painting-canvas-img ${isLoaded ? 'loaded' : 'loading'}`}
                 />
-                <div className="card-overlay">
-                  <div className="view-icon">
-                    <Eye size={22} />
-                  </div>
-                </div>
               </div>
 
-              {/* Artwork Title & Specs Box (Clean Fine-Art Framing) */}
-              <div className="art-card-info">
+              {/* Artwork Title & Specs Box */}
+              <div className="art-card-info" style={canvasScaleStyle}>
                 <h4 className="art-title">{art.title}</h4>
                 <div className="art-meta-row">
                   {art.medium && <span className="art-medium">{art.medium}</span>}
